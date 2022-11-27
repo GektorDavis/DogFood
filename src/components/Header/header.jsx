@@ -1,15 +1,10 @@
-import Logo from '../Logo/Logo';
-import Search from '../Search/search';
 import './style.css';
 
-function Header() {
+function Header({ children }) {
   return (
     <header className="header">
       <div className="container">
-        <div className="header__wrapper">
-          <Logo />
-          <Search />
-        </div>
+        <div className="header__wrapper">{children}</div>
       </div>
     </header>
   );
