@@ -1,26 +1,60 @@
-import './style.css';
-import save from './save.svg';
+import cn from 'classnames';
 
-const Card = ({ name, price, discount, qty, description, picture }) => {
+import './style.css';
+import { ReactComponent as Save } from './save.svg';
+import { isLiked } from '../../utils/utilits';
+
+const Card = ({
+  name,
+  price,
+  _id,
+  likes,
+  discount,
+  qty,
+  description,
+  pictures,
+  tags,
+  onProductLike,
+  currentUser,
+}) => {
   const discount_price = Math.round(price - (price * discount) / 100);
+
+  const liked = isLiked(likes, currentUser?._id);
+
+  function handleLikeClick() {
+    onProductLike({ _id, likes });
+  }
+
   return (
     <div className="card">
       <div className="card__sticky card__sticky_type_top-left">
         {discount !== 0 && (
-          <span className="card__discount">{`- ${discount}%`}</span>
+          <span className="card__discount">{`-${discount}%`}</span>
         )}
+        {tags &&
+          tags.map((tag) => (
+            <span
+              key={tag}
+              className={cn('tag', {
+                [`tag_type_${tag}`]: true,
+              })}
+            >
+              {tag}
+            </span>
+          ))}
       </div>
       <div className="card__sticky card__sticky_type_top-right">
-        <button className="card__fovorite">
-          <img
-            src={save}
-            alt="Добавить в избранное"
-            className="card__favorite-icon"
-          />
+        <button
+          className={cn('card__favorite', {
+            'card__favorite_is-active': liked,
+          })}
+          onClick={handleLikeClick}
+        >
+          <Save className="card__favorite-icon" />
         </button>
       </div>
       <a href="/product" className="card__link">
-        <img src={picture} alt={description} className="card__image" />
+        <img src={pictures} alt={description} className="card__image" />
         <div className="card__desc">
           <span className={discount !== 0 ? 'card__old-price' : 'card__price'}>
             {price}&nbsp;₽
