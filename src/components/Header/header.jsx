@@ -2,15 +2,15 @@ import s from './style.module.css';
 import cn from 'classnames';
 
 function Header({ children, user, onUpdateUser }) {
-  const handleClickButtonEdit = (e) => {
-    e.preventDefault();
-    onUpdateUser({ name: 'Kamazyao', about: 'Writer' });
-  };
+  // const handleClickButtonEdit = (e) => {
+  //   e.preventDefault();
+  //   onUpdateUser({ name: 'Kamazyao', about: 'Writer' });
+  // };
 
   return (
     <header className={cn(s.header, 'cover')}>
       <div className="container">
-        {user?.email && <span className={cn(s.user)}>{user?.email}</span>}
+        {/* {user?.email && <span className={cn(s.user)}>{user?.email}</span>}
         {user?.name && <span className={cn(s.user)}>{user?.name}</span>}
 
         <button
@@ -18,7 +18,7 @@ function Header({ children, user, onUpdateUser }) {
           onClick={handleClickButtonEdit}
         >
           Изменить
-        </button>
+        </button> */}
 
         <div className={s.header__wrapper}>{children}</div>
       </div>

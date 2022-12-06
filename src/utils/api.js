@@ -52,6 +52,12 @@ class Api {
       headers: this._headers,
     }).then(onResponse);
   }
+
+  getProductById(idProduct) {
+    return fetch(`${this._baseUrl}/v2/group-7/products/${idProduct}`, {
+      headers: this._headers,
+    }).then(onResponse);
+  }
 }
 
 const api = new Api(CONFIG);
