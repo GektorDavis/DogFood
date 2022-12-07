@@ -1,26 +1,26 @@
 import s from './style.module.css';
 import cn from 'classnames';
+import { ReactComponent as FavoriteIcon } from './img/favorites.svg';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { CardContext } from '../../Context/cardContext';
 
-function Header({ children, user, onUpdateUser }) {
-  // const handleClickButtonEdit = (e) => {
-  //   e.preventDefault();
-  //   onUpdateUser({ name: 'Kamazyao', about: 'Writer' });
-  // };
-
+function Header({ children }) {
+  const { favorites } = useContext(CardContext);
   return (
     <header className={cn(s.header, 'cover')}>
       <div className="container">
-        {/* {user?.email && <span className={cn(s.user)}>{user?.email}</span>}
-        {user?.name && <span className={cn(s.user)}>{user?.name}</span>}
-
-        <button
-          className="btn btn_type_primary"
-          onClick={handleClickButtonEdit}
-        >
-          Изменить
-        </button> */}
-
-        <div className={s.header__wrapper}>{children}</div>
+        <div className={s.header__wrapper}>
+          {children}
+          <div className={s.iconsMenu}>
+            <Link className={s.favoritesLink} to="/favorites">
+              <FavoriteIcon />
+              {favorites.length !== 0 && (
+                <span className={s.iconBubble}>{favorites.length}</span>
+              )}
+            </Link>
+          </div>
+        </div>
       </div>
     </header>
   );

@@ -3,10 +3,10 @@ import { calcDiscountPrice, isLiked, createMarkup } from '../../utils/utilits';
 import s from './style.module.css';
 import { ReactComponent as Save } from './img/save.svg';
 import truck from './img/truck.svg';
-import quality from './img/quality.svg';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../Context/userContext';
+import { ContentHeader } from '../ContentHeader/content-header';
 
 export const Product = ({
   onProductLike,
@@ -30,21 +30,12 @@ export const Product = ({
 
   return (
     <>
-      <div>
-        <a
-          href="#"
-          className="button-back"
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          Назад
-        </a>
-        <h1 className={s.productTitle}>{name}</h1>
+      <ContentHeader title={name}>
         <div>
           <span>Артикул:</span> <b>4444444</b>
         </div>
-      </div>
+      </ContentHeader>
+
       <div className={s.product}>
         <div className={s.imgWrapper}>
           <img src={pictures} alt={`Изображение ${name}`} />
@@ -53,7 +44,7 @@ export const Product = ({
           <span className={discount ? s.oldPrice : s.price}>
             {price}&nbsp;₽
           </span>
-          {discount && (
+          {discount !== 0 && (
             <span className={cn(s.price, 'card__price_type_discount')}>
               {discount_price}&nbsp;₽
             </span>

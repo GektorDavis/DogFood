@@ -15,6 +15,9 @@ import { useCallback } from 'react';
 import { NotFoundPage } from '../../Pages/NotFoundPage/not-found-page';
 import { UserContext } from '../../Context/userContext';
 import { CardContext } from '../../Context/cardContext';
+import { FaqPage } from '../../Pages/FaqPage/faq-page';
+import { FavoritePage } from '../../Pages/FavoritePage/favorite-page';
+import Sort from '../Sort/sort';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -22,6 +25,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const debounceSearchQuery = useDebounce(searchQuery, 450);
+  const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
 
   const handleRequest = useCallback(() => {
@@ -43,6 +47,10 @@ function App() {
       .then(([productsData, userData]) => {
         setCurrentUser(userData);
         setCards(productsData.products);
+        const favoriteProducts = productsData.products.filter((item) =>
+          isLiked(item.likes, userData._id)
+        );
+        setFavorites((prevState) => favoriteProducts);
       })
       .catch((err) => console.log(err))
       .finally(() => {
@@ -77,17 +85,28 @@ function App() {
         const newProducts = cards.map((cardState) => {
           return cardState._id === updateCard._id ? updateCard : cardState;
         });
+
+        if (!liked) {
+          setFavorites((prevState) => [...prevState, updateCard]);
+        } else {
+          setFavorites((prevState) =>
+            prevState.filter((card) => card._id !== updateCard._id)
+          );
+        }
+
         setCards(newProducts);
 
         return updateCard;
       });
     },
-    [currentUser]
+    [currentUser, cards]
   );
 
   return (
-    <UserContext.Provider value={{ user: currentUser }}>
-      <CardContext.Provider value={{ cards, handleLike: handleProductLike }}>
+    <UserContext.Provider value={{ user: currentUser, isLoading }}>
+      <CardContext.Provider
+        value={{ cards, favorites, handleLike: handleProductLike }}
+      >
         <Header user={currentUser} onUpdateUser={handleUpdateUser}>
           <>
             <Logo className="logo logo_place_header" href="/" />
@@ -107,13 +126,13 @@ function App() {
         <main className="content container">
           <SearchInfo searchText={searchQuery} />
           <Routes>
-            <Route index element={<CatalogPage isLoading={isLoading} />} />
-          </Routes>
-          <Routes>
+            <Route index element={<CatalogPage />} />
             <Route
               path="/product/:productId"
               element={<ProductPage isLoading={isLoading} />}
             />
+            <Route path="/faq" element={<FaqPage />} />
+            <Route path="/favorites" element={<FavoritePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

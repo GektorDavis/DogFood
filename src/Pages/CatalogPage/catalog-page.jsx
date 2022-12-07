@@ -1,12 +1,31 @@
+import { useContext } from 'react';
 import CardList from '../../components/CardList/card-list';
-import Spinner from '../../components/Spinner/spinner';
+import Sort from '../../components/Sort/sort';
+import { CardContext } from '../../Context/cardContext';
 
-export const CatalogPage = ({ isLoading }) => {
+const tabs = [
+  {
+    id: 'cheap',
+    title: 'Сначала дешёвые',
+  },
+  {
+    id: 'low',
+    title: 'Сначала дорогие',
+  },
+  {
+    id: 'sale',
+    title: 'По скидке',
+  },
+];
+
+export const CatalogPage = () => {
+  const { cards } = useContext(CardContext);
+
   return (
     <>
-      {/* <Sort /> */}
+      <Sort tabs={tabs} />
       <div className="contant__cards">
-        {isLoading ? <Spinner /> : <CardList />}
+        <CardList cards={cards} />
       </div>
     </>
   );
