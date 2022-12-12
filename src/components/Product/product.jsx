@@ -4,9 +4,10 @@ import s from './style.module.css';
 import { ReactComponent as Save } from './img/save.svg';
 import truck from './img/truck.svg';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../../Context/userContext';
 import { ContentHeader } from '../ContentHeader/content-header';
+import { Rating } from '../Rating/rating';
 
 export const Product = ({
   onProductLike,
@@ -23,6 +24,7 @@ export const Product = ({
   stock,
 }) => {
   const { user: currentUser } = useContext(UserContext);
+  const [rating, setRating] = useState(4);
   const navigate = useNavigate();
   const discount_price = calcDiscountPrice(price, discount);
   const descriptionHTML = createMarkup(description);
@@ -32,7 +34,8 @@ export const Product = ({
     <>
       <ContentHeader title={name}>
         <div>
-          <span>Артикул:</span> <b>4444444</b>
+          <span>Артикул:</span>
+          <Rating rating={rating} setRating={setRating} isEditable />
         </div>
       </ContentHeader>
 

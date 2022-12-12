@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 function Search({ onSubmit, onInput }) {
   const [inputText, setInputText] = useState('');
+
   const handleInput = (e) => {
     setInputText(e.target.value);
     onInput && onInput(e.target.value);

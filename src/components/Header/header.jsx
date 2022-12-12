@@ -1,12 +1,14 @@
 import s from './style.module.css';
 import cn from 'classnames';
 import { ReactComponent as FavoriteIcon } from './img/favorites.svg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import { CardContext } from '../../Context/cardContext';
 
 function Header({ children }) {
   const { favorites } = useContext(CardContext);
+  const location = useLocation();
+
   return (
     <header className={cn(s.header, 'cover')}>
       <div className="container">
@@ -18,6 +20,15 @@ function Header({ children }) {
               {favorites.length !== 0 && (
                 <span className={s.iconBubble}>{favorites.length}</span>
               )}
+            </Link>
+            <Link
+              to="login"
+              state={{
+                backgroundLocation: location,
+                initialPath: location.pathname,
+              }}
+            >
+              Войти
             </Link>
           </div>
         </div>

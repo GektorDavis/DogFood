@@ -3,27 +3,12 @@ import CardList from '../../components/CardList/card-list';
 import Sort from '../../components/Sort/sort';
 import { CardContext } from '../../Context/cardContext';
 
-const tabs = [
-  {
-    id: 'cheap',
-    title: 'Сначала дешёвые',
-  },
-  {
-    id: 'low',
-    title: 'Сначала дорогие',
-  },
-  {
-    id: 'sale',
-    title: 'По скидке',
-  },
-];
-
 export const CatalogPage = () => {
   const { cards } = useContext(CardContext);
 
   return (
     <>
-      <Sort tabs={tabs} />
+      <Sort />
       <div className="contant__cards">
         <CardList cards={cards} />
       </div>
