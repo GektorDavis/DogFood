@@ -1,60 +1,16 @@
-import { useForm } from 'react-hook-form';
-import { FormInput } from '../FormInput/form-input';
-import { FormButton } from '../FormButton/form-button';
+// import { useForm } from 'react-hook-form';
+// import { FormInput } from '../FormInput/form-input';
+// import { FormButton } from '../FormButton/form-button';
+// import cn from 'classnames';
 import s from './style.module.css';
-import cn from 'classnames';
+import './style.css';
 
-function Form({
-  title,
-  formType,
-  button,
-  input,
-  infoText,
-  infoTextHeader,
-  changeType,
-  redirect,
-}) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ mode: 'onBlur' });
-
-  const cbSubmit = (data) => {
-    console.log(data);
-  };
-
-  const emailRegexp =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const passwordRegexp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-  const emailRegister = register('email', {
-    required: {
-      value: true,
-      message: 'Обязательное поле',
-    },
-    pattern: {
-      value: emailRegexp,
-      message: 'Email не соответствует формату электронной почты',
-    },
-  });
-
-  const passwordRegister = register('password', {
-    required: {
-      value: true,
-      message: 'Обязательное поле',
-    },
-    pattern: {
-      value: passwordRegexp,
-      message:
-        'Пароль должен содержать минимум восемь символов, одну букву латинского алфавита и одну цифру',
-    },
-  });
-
+function Form({ title, handleFormSubmit, children }) {
   return (
-    <form onSubmit={handleSubmit(cbSubmit)}>
+    <form className={s.form} onSubmit={handleFormSubmit}>
       <h1 className={s.title}>{title}</h1>
-      <FormInput
+      {children}
+      {/* <FormInput
         {...emailRegister}
         id="email"
         type="text"
@@ -108,7 +64,7 @@ function Form({
         >
           {button.redirect}
         </FormButton>
-      )}
+      )} */}
     </form>
   );
 }

@@ -10,13 +10,7 @@ import useDebounce from '../../hooks/useDebounce';
 import { isLiked } from '../../utils/utilits';
 import { CatalogPage } from '../../Pages/CatalogPage/catalog-page';
 import { ProductPage } from '../../Pages/ProductPage/product-page';
-import {
-  Link,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
 import { NotFoundPage } from '../../Pages/NotFoundPage/not-found-page';
 import { UserContext } from '../../Context/userContext';
@@ -24,7 +18,9 @@ import { CardContext } from '../../Context/cardContext';
 import { FaqPage } from '../../Pages/FaqPage/faq-page';
 import { FavoritePage } from '../../Pages/FavoritePage/favorite-page';
 import Modal from '../Modal/modal';
-import { FormModal } from '../FormModal/form-modal';
+import { Register } from '../Register/register';
+import { Login } from '../Login/login';
+import { ResetPass } from '../ResetPass/reset-pass';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -143,7 +139,6 @@ function App() {
           setCurrentSort,
         }}
       >
-        <FormModal />
         <Header user={currentUser} onUpdateUser={handleUpdateUser}>
           <>
             <Logo className="logo logo_place_header" href="/" />
@@ -178,24 +173,9 @@ function App() {
             />
             <Route path="/faq" element={<FaqPage />} />
             <Route path="/favorites" element={<FavoritePage />} />
-            <Route
-              path="/login"
-              element={
-                <Modal>
-                  Авторизация
-                  <Link to="/register">Зарегистрироваться</Link>
-                </Modal>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <Modal>
-                  Регистрация
-                  <Link to="/login">Войти</Link>
-                </Modal>
-              }
-            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/reset-password" element={<ResetPass />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
           {backgroundLocation && (
@@ -204,17 +184,7 @@ function App() {
                 path="/login"
                 element={
                   <Modal>
-                    Авторизация
-                    <Link
-                      to="/register"
-                      replace={true}
-                      state={{
-                        backgroundLocation: location,
-                        initialPath,
-                      }}
-                    >
-                      Зарегистрироваться
-                    </Link>
+                    <Login />
                   </Modal>
                 }
               />
@@ -222,17 +192,15 @@ function App() {
                 path="/register"
                 element={
                   <Modal>
-                    Регистрация
-                    <Link
-                      to="/login"
-                      replace={true}
-                      state={{
-                        backgroundLocation: location,
-                        initialPath,
-                      }}
-                    >
-                      Войти
-                    </Link>
+                    <Register />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/reset-password"
+                element={
+                  <Modal>
+                    <ResetPass />
                   </Modal>
                 }
               />

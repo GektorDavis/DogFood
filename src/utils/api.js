@@ -37,6 +37,14 @@ class Api {
     }).then(onResponse);
   }
 
+  createReviewProduct(productId, reviewData) {
+    return fetch(`${this._baseUrl}/v2/group-7/products/review/${productId}`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(reviewData),
+    }).then(onResponse);
+  }
+
   search(searchQuery) {
     return fetch(
       `${this._baseUrl}/v2/group-7/products/search?query=${searchQuery}`,
