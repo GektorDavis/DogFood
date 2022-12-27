@@ -33,19 +33,21 @@ export const ProductPage = () => {
 
   return (
     <>
-      <div className="contant__cards">
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          !errorState && (
-            <Product
-              {...product}
-              setProduct={setProduct}
-              onProductLike={handleProductLike}
-            />
-          )
-        )}
-        {!isLoading && errorState && <NotFound />}
+      <div className="container container_inner">
+        <div className="contant__cards">
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            !errorState && (
+              <Product
+                {...product}
+                setProduct={setProduct}
+                onProductLike={handleProductLike}
+              />
+            )
+          )}
+          {!isLoading && errorState && <NotFound />}
+        </div>
       </div>
     </>
   );

@@ -8,9 +8,11 @@ export const CatalogPage = () => {
 
   return (
     <>
-      <Sort />
-      <div className="contant__cards">
-        <CardList cards={cards} />
+      <div className="container container_inner">
+        <Sort />
+        <div className="contant__cards">
+          <CardList cards={cards} />
+        </div>
       </div>
     </>
   );
