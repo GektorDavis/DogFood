@@ -23,16 +23,10 @@
   }
 }
 
-.profile {
-  display: flex;
-  flex-direction: column;
-  font-size: 18px;
-  font-weight: 600;
-  align-items: flex-end;
-}
-
 .iconsMenu {
   display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .favoritesLink {
@@ -49,6 +43,7 @@
   background-color: #01a54e;
   border-radius: 50%;
   color: #ffffff;
+  border: 2px solid #ffe44d;
   font-size: 14px;
   width: 22px;
   height: 22px;
@@ -60,4 +55,21 @@
   position: absolute;
   bottom: 60%;
   left: 70%;
+}
+
+.iconsMenuItem {
+  display: flex;
+  font-size: 18px;
+  font-weight: 600;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #1a1a1a;
+}
+
+.iconsMenuItem svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  fill: currentColor;
 }
