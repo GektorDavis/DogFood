@@ -7,12 +7,12 @@ import { CardContext } from '../../Context/cardContext';
 export const FavoritePage = () => {
   const { favorites } = useContext(CardContext);
   return (
-    <>
+    <div className="container container_inner">
       <ContentHeader title="Избранное" />
       <Sort />
       <div className="contant__cards">
         <CardList cards={favorites} />
       </div>
-    </>
+    </div>
   );
 };

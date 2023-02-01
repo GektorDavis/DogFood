@@ -21,6 +21,7 @@ import Modal from '../Modal/modal';
 import { Register } from '../Register/register';
 import { Login } from '../Login/login';
 import { ResetPass } from '../ResetPass/reset-pass';
+import { HomePage } from '../../Pages/HomePage/home-page';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -155,7 +156,7 @@ function App() {
             </Routes>
           </>
         </Header>
-        <main className="content container">
+        <main className="content">
           <SearchInfo searchText={searchQuery} />
           <Routes
             location={
@@ -166,7 +167,8 @@ function App() {
               location
             }
           >
-            <Route index element={<CatalogPage />} />
+            <Route index element={<HomePage />} />
+            <Route path="/catalog" element={<CatalogPage />} />
             <Route
               path="/product/:productId"
               element={<ProductPage isLoading={isLoading} />}
