@@ -72,7 +72,7 @@ function App() {
 
   return (
     <>
-      <Header user={currentUser} onUpdateUser={handleUpdateUser}>
+      <Header user={currentUser}>
         <>
           <Logo className="logo logo_place_header" href="/" />
           <Routes>
