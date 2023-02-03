@@ -1,51 +1,47 @@
-import { useContext } from 'react';
+import { useEffect } from 'react';
 import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { NotFound } from '../../components/NotFound/NotFound';
 import { Product } from '../../components/Product/product';
 import Spinner from '../../components/Spinner/spinner';
-import { CardContext } from '../../Context/cardContext';
-import { useApi } from '../../hooks/useApi';
-import api from '../../utils/api';
+import { fetchChangeLikeProduct } from '../../storage/products/products-slice';
+import {
+  fetchSingleProduct,
+  setProductState,
+} from '../../storage/singleProduct/single-product-slice';
 
 export const ProductPage = () => {
   const { productId } = useParams();
 
-  const { handleLike } = useContext(CardContext);
-
-  const handleGetProduct = useCallback(
-    () => api.getProductById(productId),
-    [productId]
-  );
-
+  const dispatch = useDispatch();
   const {
     data: product,
-    setData: setProduct,
-    loading: isLoading,
+    loading,
     error: errorState,
-  } = useApi(handleGetProduct);
+  } = useSelector((state) => state.singleProduct);
+
+  useEffect(() => {
+    dispatch(fetchSingleProduct(productId));
+  }, [dispatch, productId]);
 
   const handleProductLike = useCallback(() => {
-    handleLike(product).then((updateProduct) => {
-      setProduct(updateProduct);
+    dispatch(fetchChangeLikeProduct(product)).then((updateProduct) => {
+      dispatch(setProductState(updateProduct.payload.product));
     });
-  }, [product, handleLike, setProduct]);
+  }, [product, dispatch]);
 
   return (
     <div className="container container_inner">
       <div className="contant__cards">
-        {isLoading ? (
+        {loading ? (
           <Spinner />
         ) : (
           !errorState && (
-            <Product
-              {...product}
-              setProduct={setProduct}
-              onProductLike={handleProductLike}
-            />
+            <Product {...product} onProductLike={handleProductLike} />
           )
         )}
-        {!isLoading && errorState && <NotFound />}
+        {!loading && errorState && <NotFound />}
       </div>
     </div>
   );

@@ -1,11 +1,10 @@
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import CardList from '../../components/CardList/card-list';
 import { ContentHeader } from '../../components/ContentHeader/content-header';
 import Sort from '../../components/Sort/sort';
-import { CardContext } from '../../Context/cardContext';
 
 export const FavoritePage = () => {
-  const { favorites } = useContext(CardContext);
+  const favorites = useSelector((state) => state.products.favoriteProducts);
   return (
     <div className="container container_inner">
       <ContentHeader title="Избранное" />

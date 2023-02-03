@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import api from '../../utils/api';
-import { VALIDATE_CONFIG } from '../../utils/constants';
+import { useDispatch } from 'react-redux';
+import { fetchCreateReview } from '../../storage/singleProduct/single-product-slice';
+import { INITIAL_VALUE_RATING, VALIDATE_CONFIG } from '../../utils/constants';
 import Form from '../Form/form';
 import { FormButton } from '../FormButton/form-button';
 import { FormInput } from '../FormInput/form-input';
@@ -12,20 +13,20 @@ export const FormReview = ({
   productId,
   setProduct,
 }) => {
-  const [rating, setRating] = useState(1);
-
+  const [rating, setRating] = useState(INITIAL_VALUE_RATING);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({ mode: 'onBlur' });
 
   const sentReviewProduct = (data) => {
-    api
-      .createReviewProduct(productId, { ...data, rating })
-      .then((newProduct) => {
-        setProduct && setProduct(newProduct);
-      });
+    dispatch(fetchCreateReview({ productId, data })).then(() => {
+      reset();
+      setRating(INITIAL_VALUE_RATING);
+    });
   };
 
   const textReview = register('text', {

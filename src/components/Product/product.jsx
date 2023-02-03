@@ -3,12 +3,11 @@ import { calcDiscountPrice, isLiked, createMarkup } from '../../utils/utilits';
 import s from './style.module.css';
 import { ReactComponent as Save } from './img/save.svg';
 import truck from './img/truck.svg';
-import { useContext } from 'react';
-import { UserContext } from '../../Context/userContext';
 import { ContentHeader } from '../ContentHeader/content-header';
 import { Rating } from '../Rating/rating';
 import { useMemo } from 'react';
 import { FormReview } from '../FormReview/form-review';
+import { useSelector } from 'react-redux';
 
 export const Product = ({
   onProductLike,
@@ -22,9 +21,8 @@ export const Product = ({
   description,
   wight,
   _id,
-  setProduct,
 }) => {
-  const { user: currentUser } = useContext(UserContext);
+  const currentUser = useSelector((state) => state.user.data);
   const discount_price = calcDiscountPrice(price, discount);
   const descriptionHTML = createMarkup(description);
   const isLike = isLiked(likes, currentUser?._id);
@@ -131,11 +129,7 @@ export const Product = ({
           </li>
         ))}
       </ul>
-      <FormReview
-        title={`Отзыв о товаре ${name}`}
-        productId={_id}
-        setProduct={setProduct}
-      />
+      <FormReview title={`Отзыв о товаре ${name}`} productId={_id} />
     </>
   );
 };

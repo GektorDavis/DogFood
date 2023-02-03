@@ -1,16 +1,15 @@
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../Context/userContext';
 import Card from '../Card/card';
 import { NotFound } from '../NotFound/NotFound';
 import './style.css';
 
 const CardList = ({ cards }) => {
   const navigate = useNavigate();
-  const isLoading = useContext(UserContext);
+  const loading = useSelector((state) => state.products.loading);
   return (
     <>
-      {!cards.length && !isLoading && (
+      {!cards.length && !loading && (
         <NotFound
           buttonText="Назад"
           title="Избранных вкусняшек пока нет"
